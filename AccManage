@@ -1,0 +1,94 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author carrington ihemadu
+ */
+public class AccManage extends User
+{
+    private double Balance;
+    private double Deposit_amt;
+    private double Withdrawal_amt;
+	
+    //constructors 
+    public AccManage(String f_name, String s_name, Date D_O_B, String a_type, String pin, String acc_number,double balance, double deposit_amt, double withdraw_amt)
+    {
+        super(f_name, s_name, D_O_B, a_type, pin, acc_number);
+	this.Balance = balance;
+        this.Deposit_amt = deposit_amt;
+	this.Withdrawal_amt = withdraw_amt;
+    }
+	
+    /*methods 
+    *first the deposit method   
+    *Second the Withdrawal
+    *third set User details
+    */
+    public void deposit(double dep_amt)
+    {
+	if (dep_amt < 0)
+	{
+            System.out.println("\nCannot deposit this into account");
+	}
+	else if (dep_amt > 0)
+	{
+            Balance += dep_amt;
+            System.out.println(Balance);
+			
+	}
+	else
+	{
+            System.out.println("Cannot deposit this into account");
+	}
+    }
+	
+    public double Withdraw(double withdraw_amt)
+    {
+        if (withdraw_amt > Balance)
+	{
+            System.out.println("\nInsufficient funds");
+	}
+        else
+	{
+            setBalance(Balance-withdraw_amt);
+            System.out.println(Balance);
+			
+	}
+		return Balance;
+    }
+	
+	//getters and setters
+    public double getBalance() 
+    {
+        return Balance;
+    }
+	
+    public void setBalance(double balance) 
+    {
+        Balance = balance;
+    }
+
+    public double getDeposit_amt() 
+    {
+        return Deposit_amt;
+    }
+    
+    public void setDeposit_amt(double deposit_amt) 
+    {
+        Deposit_amt = deposit_amt;
+    }
+
+    public double getWithdrawal_amt()
+    {
+        return Withdrawal_amt;
+    }
+
+    public void setWithdrawal_amt(double withdrawal_amt) 
+    {
+        Withdrawal_amt = withdrawal_amt;
+    }
+}
