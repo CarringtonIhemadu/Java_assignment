@@ -1,4 +1,11 @@
 
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /*
@@ -19,9 +26,9 @@ public class AssignmentGUI extends javax.swing.JFrame
     Date d3 = new Date(2,12, 1912);
     Date d4 = new Date(2,12, 1912);
     AccManage A1 = new AccManage("Carrington", "Ihemadu", d1, "deposit", "12345", "12345", 5000, 0, 0  );
-    AccManage A2 = new AccManage("Carrington", "Ihemadu", d1, "deposit", "12345", "54321", 15000, 0, 0  );
-    AccManage A3 = new AccManage("Carrington", "Ihemadu", d1, "deposit", "12345", "24680", 25000, 0, 0  );
-    AccManage A4 = new AccManage("Carrington", "Ihemadu", d1, "deposit", "12345", "08642", 35000, 0, 0  );
+    AccManage A2 = new AccManage("Carrington", "Ihemadu", d2, "deposit", "12345", "54321", 15000, 0, 0  );
+    AccManage A3 = new AccManage("Carrington", "Ihemadu", d3, "deposit", "12345", "24680", 25000, 0, 0  );
+    AccManage A4 = new AccManage("Carrington", "Ihemadu", d4, "deposit", "12345", "08642", 35000, 0, 0  );
 
     /**
      * Creates new form AssignmentGUI
@@ -58,6 +65,10 @@ public class AssignmentGUI extends javax.swing.JFrame
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         EXIT = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        update_account = new javax.swing.JButton();
+        view_account = new javax.swing.JButton();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -148,6 +159,24 @@ public class AssignmentGUI extends javax.swing.JFrame
             }
         });
 
+        jLabel8.setText("update account details");
+
+        jLabel9.setText("view account details");
+
+        update_account.setText("SELECT");
+        update_account.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                update_accountActionPerformed(evt);
+            }
+        });
+
+        view_account.setText("SELECT");
+        view_account.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                view_accountActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -155,11 +184,9 @@ public class AssignmentGUI extends javax.swing.JFrame
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(EXIT))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,9 +200,22 @@ public class AssignmentGUI extends javax.swing.JFrame
                                     .addComponent(WITHDRAWAL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
                                     .addComponent(CHANGEPIN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(DEPOSIT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(ACCOUNTBALANCE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(ACCOUNTBALANCE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(view_account, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(update_account, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(EXIT)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -185,11 +225,15 @@ public class AssignmentGUI extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ACCOUNTBALANCE, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ACCOUNTBALANCE, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(view_account, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DEPOSIT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(DEPOSIT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(update_account, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -205,7 +249,7 @@ public class AssignmentGUI extends javax.swing.JFrame
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(CHANGEPIN, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -228,143 +272,50 @@ public class AssignmentGUI extends javax.swing.JFrame
 
     private void WITHDRAWALActionPerformed(java.awt.event.ActionEvent evt) {                                           
         
-        if(ACC_NUM.equals(A1.getAccount_number()))
+        String input = JOptionPane.showInputDialog("enter your withdraw amount");
+        int withdraw_successful = A1.Withdraw(ACC_NUM, Integer.valueOf(input));
+        
+        if (withdraw_successful == 1)
         {
-            String input = JOptionPane.showInputDialog("enter your witdrawal amount");
-            
-            if((input.length()>0 && input.length()<6))
-            {
-                A1.Withdraw(Integer.valueOf(input));
-                JOptionPane.showMessageDialog(this, "Withdrawal successful new balance : " + A1.getBalance()+"$");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid option");
-            }
+            JOptionPane.showMessageDialog(this, "withdraw successful");
         }
-        
-        else if(ACC_NUM.equals(A2.getAccount_number()))
+        else
         {
-            String input = JOptionPane.showInputDialog("enter your witdrawal amount");
-            
-            if((input.length()>0 && input.length()<6))
-            {
-                A2.Withdraw(Integer.valueOf(input));
-                JOptionPane.showMessageDialog(this, "Withdrawal successful new balance : " + A2.getBalance()+"$");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid option");
-            }
+            JOptionPane.showMessageDialog(this, "withdraw declined (account balance too low)");
         }
-        
-        else if(ACC_NUM.equals(A3.getAccount_number()))
-        {
-            String input = JOptionPane.showInputDialog("enter your witdrawal amount");
-            
-            if((input.length()>0 && input.length()<6))
-            {
-                A3.Withdraw(Integer.valueOf(input));
-                JOptionPane.showMessageDialog(this, "Withdrawal successful new balance : " + A3.getBalance()+"$");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid option");
-            }
-        }
-        
-        else if(ACC_NUM.equals(A4.getAccount_number()))
-        {
-            String input = JOptionPane.showInputDialog("enter your witdrawal amount");
-            
-            if((input.length()>0 && input.length()<6))
-            {
-                A4.Withdraw(Integer.valueOf(input));
-                JOptionPane.showMessageDialog(this, "Withdrawal successful new balance : " + A4.getBalance()+"$");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid option");
-            }
-        } 
-        
     }                                          
 
     private void ACCOUNTBALANCEActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        if(ACC_NUM.equals(A1.getAccount_number()))
+        try
         {
-            JOptionPane.showMessageDialog(this, A1.getBalance()+"$");
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Atm_login","C16341401","CIHEMADU");
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("select * from USER_DETAIL");
+            
+            while(rs.next())
+            {
+                if(rs.getString(7).equals(ACC_NUM))
+                {
+                    String balance = rs.getString(6);
+                    int balance2 = Integer.valueOf(balance);
+                    JOptionPane.showMessageDialog(this, "the current account balance: " +balance2);
+                    
+                }
+            }
         }
-        
-        else if(ACC_NUM.equals(A2.getAccount_number()))
+        catch(SQLException ex)
         {
-            JOptionPane.showMessageDialog(this, A2.getBalance()+"$");
-        }
-         
-        else if(ACC_NUM.equals(A3.getAccount_number()))
-        {
-            JOptionPane.showMessageDialog(this, A3.getBalance()+"$");
-        }
-         
-        else if(ACC_NUM.equals(A4.getAccount_number()))
-        {
-            JOptionPane.showMessageDialog(this, A4.getBalance()+"$");
+            JOptionPane.showMessageDialog(this, ex);
         }
     }                                              
 
     private void DEPOSITActionPerformed(java.awt.event.ActionEvent evt) {                                        
         String input = JOptionPane.showInputDialog("enter your deposit amount");
+        int deposit_successful = A1.deposit(ACC_NUM, Integer.valueOf(input));
         
-        if(ACC_NUM.equals(A1.getAccount_number()))
+        if (deposit_successful == 1)
         {
-            if((input.length()>0 && input.length()<6))
-            {
-                A1.deposit(Integer.valueOf(input));
-                JOptionPane.showMessageDialog(this, "deposit successful new balance : " + A1.getBalance()+"$");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid option");
-            }
-        }
-        
-        else if(ACC_NUM.equals(A2.getAccount_number()))
-        {
-            if((input.length()>0 && input.length()<6))
-            {
-                A2.deposit(Integer.valueOf(input));
-                JOptionPane.showMessageDialog(this, "deposit successful new balance : " + A2.getBalance()+"$");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid option");
-            }
-        }
-         
-        else if(ACC_NUM.equals(A3.getAccount_number()))
-        {
-            if((input.length()>0 && input.length()<6))
-            {
-                A3.deposit(Integer.valueOf(input));
-                JOptionPane.showMessageDialog(this, "deposit successful new balance : " + A3.getBalance()+"$");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid option");
-            }
-        }
-          
-        else if(ACC_NUM.equals(A4.getAccount_number()))
-        {
-            if((input.length()>0 && input.length()<6))
-            {
-                A4.deposit(Integer.valueOf(input));
-                JOptionPane.showMessageDialog(this, "deposit successful new balance : " + A4.getBalance()+"$");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid option");
-            }
+            JOptionPane.showMessageDialog(this, "deposit successful");
         }
     }                                       
 
@@ -376,163 +327,53 @@ public class AssignmentGUI extends javax.swing.JFrame
 
     private void CHANGEPINActionPerformed(java.awt.event.ActionEvent evt) {                                          
         String input = JOptionPane.showInputDialog("enter your current passcode");
-       
-        if(ACC_NUM.equals(A1.getAccount_number()))
-        {
-            if((input.length()>0 && input.length()<6))
-            {
-                if(input.equals(A1.getPass_code()))
-                {
-                    String new_pass = JOptionPane.showInputDialog("enter your new passcode");
-                    
-                    if((new_pass.length()>0 && new_pass.length()<6))
-                    {
-                        String new_pass2 = JOptionPane.showInputDialog("enter your new passcode again");
-                        
-                        if((new_pass2.length()>0 && new_pass2.length()<6 && new_pass2.equals(new_pass)))
-                        {
-                            A1.setPass_code(new_pass2);
-                            JOptionPane.showMessageDialog(this, "your passcode was changed successfully");
-                        }
-                        else
-                        {
-                            JOptionPane.showMessageDialog(this, "your two pass words do not match");
-                        }
-                        
-                    }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(this, "your new pass code does not match the format, enter up to six characters next time");
-                    }    
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(this, "the pass code you entered did not match your current pass code, please try again");
-                }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid pass code");
-            }
-        }
         
-        if(ACC_NUM.equals(A2.getAccount_number()))
+        try
         {
-            if((input.length()>0 && input.length()<6))
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Atm_login","C16341401","CIHEMADU");
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("select * from USER_DETAIL");
+            
+            while(rs.next())
             {
-                if(input.equals(A2.getPass_code()))
+                if(rs.getString(7).equals(ACC_NUM) && rs.getString(5).equals(input))
                 {
-                    String new_pass = JOptionPane.showInputDialog("enter your new passcode");
+                    String input2 = JOptionPane.showInputDialog("enter your new passcode");
+                    String input3 = JOptionPane.showInputDialog("enter your new passcode again");
                     
-                    if((new_pass.length()>0 && new_pass.length()<6))
+                    if(input2.equals(input3))
                     {
-                        String new_pass2 = JOptionPane.showInputDialog("enter your new passcode again");
-                        
-                        if((new_pass2.length()>0 && new_pass2.length()<6 && new_pass2.equals(new_pass)))
-                        {
-                            A2.setPass_code(new_pass2);
-                            JOptionPane.showMessageDialog(this, "your passcode was changed successfully");
-                        }
-                        else
-                        {
-                            JOptionPane.showMessageDialog(this, "your two pass words do not match");
-                        }
-                        
+                        st.addBatch("UPDATE USER_DETAIL SET PASSCODE = '"+input2+"' WHERE user_detail.accnum = '"+ACC_NUM+"' ");
+                        st.executeBatch();
+                        JOptionPane.showMessageDialog(this, "passcode updated");
                     }
                     else
                     {
-                        JOptionPane.showMessageDialog(this, "your new pass code does not match the format, enter up to six characters next time");
-                    }    
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(this, "the pass code you entered did not match your current pass code, please try again");
-                }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid pass code");
-            }
-        }
-        
-        if(ACC_NUM.equals(A3.getAccount_number()))
-        {
-            if((input.length()>0 && input.length()<6))
-            {
-                if(input.equals(A3.getPass_code()))
-                {
-                    String new_pass = JOptionPane.showInputDialog("enter your new passcode");
-                    
-                    if((new_pass.length()>0 && new_pass.length()<6))
-                    {
-                        String new_pass2 = JOptionPane.showInputDialog("enter your new passcode again");
-                        
-                        if((new_pass2.length()>0 && new_pass2.length()<6 && new_pass2.equals(new_pass)))
-                        {
-                            A3.setPass_code(new_pass2);
-                            JOptionPane.showMessageDialog(this, "your passcode was changed successfully");
-                        }
-                        else
-                        {
-                            JOptionPane.showMessageDialog(this, "your two pass words do not match");
-                        }
-                        
+                        JOptionPane.showMessageDialog(this, "your two passwords do not match please try again");
+                        break;
                     }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(this, "your new pass code does not match the format, enter up to six characters next time");
-                    }    
+                    break;
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(this, "the pass code you entered did not match your current pass code, please try again");
+                    JOptionPane.showMessageDialog(this, "please enter a correct current passcode");
                 }
             }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid pass code");
-            }
         }
-        
-        if(ACC_NUM.equals(A4.getAccount_number()))
+        catch(SQLException ex)
         {
-            if((input.length()>0 && input.length()<6))
-            {
-                if(input.equals(A4.getPass_code()))
-                {
-                    String new_pass = JOptionPane.showInputDialog("enter your new passcode");
-                    
-                    if((new_pass.length()>0 && new_pass.length()<6))
-                    {
-                        String new_pass2 = JOptionPane.showInputDialog("enter your new passcode again");
-                        
-                        if((new_pass2.length()>0 && new_pass2.length()<6 && new_pass2.equals(new_pass)))
-                        {
-                            A4.setPass_code(new_pass2);
-                            JOptionPane.showMessageDialog(this, "your passcode was changed successfully");
-                        }
-                        else
-                        {
-                            JOptionPane.showMessageDialog(this, "your two pass words do not match");
-                        }
-                        
-                    }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(this, "your new pass code does not match the format, enter up to six characters next time");
-                    }    
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(this, "the pass code you entered did not match your current pass code, please try again");
-                }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "please enter a valid pass code");
-            }
+            JOptionPane.showMessageDialog(this, ex);
         }
+      
     }                                         
+
+    private void view_accountActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+    }                                            
+
+    private void update_accountActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        // TODO add your handling code here:
+    }                                              
     
     // Variables declaration - do not modify                     
     private javax.swing.JButton ACCOUNTBALANCE;
@@ -547,9 +388,14 @@ public class AssignmentGUI extends javax.swing.JFrame
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton update_account;
+    private javax.swing.JButton view_account;
     // End of variables declaration                   
 }
+
