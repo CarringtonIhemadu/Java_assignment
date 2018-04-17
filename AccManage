@@ -1,3 +1,11 @@
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -28,37 +36,78 @@ public class AccManage extends User
     *Second the Withdrawal
     *third set User details
     */
-    public void deposit(double dep_amt)
+    public int deposit(String ACC_NUM, int deposit_amt)
     {
-	if (dep_amt < 0)
-	{
-            System.out.println("\nCannot deposit this into account");
-	}
-	else if (dep_amt > 0)
-	{
-            Balance += dep_amt;
-            System.out.println(Balance);
-			
-	}
-	else
-	{
-            System.out.println("Cannot deposit this into account");
-	}
+         try
+        {
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Atm_login","C16341401","CIHEMADU");
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("select * from USER_DETAIL");
+            
+            while(rs.next())
+            {
+                if(rs.getString(7).equals(ACC_NUM))
+                {
+                    String balance = rs.getString(6);
+                    int balance2 = Integer.valueOf(balance);
+                    int new_balance = balance2 + deposit_amt;
+                    
+                    st.addBatch("UPDATE USER_DETAIL SET ACCBALANCE = "+new_balance+" WHERE user_detail.accnum = '"+ACC_NUM+"' ");
+                    st.executeBatch();
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+        
+        catch(SQLException ex)
+        {
+            
+        }
+        return 0;
     }
 	
-    public double Withdraw(double withdraw_amt)
+    public int Withdraw(String ACC_NUM, int withdraw_amt)
     {
-        if (withdraw_amt > Balance)
-	{
-            System.out.println("\nInsufficient funds");
-	}
-        else
-	{
-            setBalance(Balance-withdraw_amt);
-            System.out.println(Balance);
-			
-	}
-		return Balance;
+        try
+        {
+            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/Atm_login","C16341401","CIHEMADU");
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("select * from USER_DETAIL");
+            
+            while(rs.next())
+            {
+                if(rs.getString(7).equals(ACC_NUM))
+                {
+                    
+                    String balance = rs.getString(6);
+                    int balance2 = Integer.valueOf(balance);
+                    
+                    if(balance2<withdraw_amt)
+                    {
+                        return 0;
+                    }
+                    
+                    else
+                    {
+                        int new_balance = balance2 - withdraw_amt;
+                    
+                        st.addBatch("UPDATE USER_DETAIL SET ACCBALANCE = "+new_balance+" WHERE user_detail.accnum = '"+ACC_NUM+"' ");
+                        st.executeBatch();
+                        return 1;
+                    }
+                }
+            }
+        }
+        
+        catch(SQLException ex)
+        {
+            
+        }
+        return 0;
     }
 	
 	//getters and setters
@@ -92,3 +141,4 @@ public class AccManage extends User
         Withdrawal_amt = withdrawal_amt;
     }
 }
+
